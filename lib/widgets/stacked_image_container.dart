@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:todo_chal1/constant/app_sizes.dart';
+import 'package:todo_chal1/constants/app_sizes.dart';
 import 'package:todo_chal1/widgets/xspace.dart';
 
 class StackedImageContainer extends StatelessWidget {
@@ -14,7 +14,7 @@ class StackedImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     AppSizes size = AppSizes(context);
     ThemeData themeData = Theme.of(context);
-    const int ceil = 3;
+    const int ceil = 4;
     int rest = avatars.length - ceil;
     List.generate(2, ((index) => index));
     if (rest <= 0) {
@@ -25,7 +25,7 @@ class StackedImageContainer extends StatelessWidget {
     return Row(
       children: [
         renderStack(copy),
-        XSpace((.2 * (size.AVATAR_RADIUS / 2)) * ceil).x,
+        XSpace((.15 * (size.AVATAR_RADIUS / 2)) * ceil).x,
         SizedBox(
           child: Text(
             "+",
@@ -34,7 +34,7 @@ class StackedImageContainer extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.w500, color: backgroundColor),
           ),
         ),
-        XSpace((.2 * (size.AVATAR_RADIUS / 2))).x,
+        XSpace((.1 * (size.AVATAR_RADIUS / 2))).x,
         Container(
           width: size.AVATAR_RADIUS / 2,
           height: size.AVATAR_RADIUS / 2,
@@ -62,7 +62,7 @@ class StackedImageContainer extends StatelessWidget {
       return Row(
         children: images.reversed
             .map((avatar) => Align(
-                  widthFactor: .7,
+                  widthFactor: .5,
                   alignment: Alignment.centerLeft,
                   child: Container(
                     width: size.AVATAR_RADIUS / 2,

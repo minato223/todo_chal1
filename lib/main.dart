@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_chal1/provider/theme_provider.dart';
+import 'package:todo_chal1/providers/theme_provider.dart';
 import 'package:todo_chal1/views/components/menu/menu.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Todo 1',
       theme: ThemeProvider.lightTheme,
       home: const Menu(),
     );
