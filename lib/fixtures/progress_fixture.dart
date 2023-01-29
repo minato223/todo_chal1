@@ -12,5 +12,20 @@ class ProgressFixture {
             title: "Your\nEfficiency",
             subtitle: "Excellent results",
             progression: 32.8),
+        ProgressModel(
+            id: 3,
+            title: "Your\nEfficiency",
+            subtitle: "Excellent results",
+            progression: 32.8),
+        ProgressModel(
+            id: 4,
+            title: "Your\nEfficiency",
+            subtitle: "Excellent results",
+            progression: 32.8),
+        ProgressModel(
+            id: 5,
+            title: "Your\nEfficiency",
+            subtitle: "Excellent results",
+            progression: 32.8),
       ];
 }
