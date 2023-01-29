@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:todo_chal1/constants/app_colors.dart';
 import 'package:todo_chal1/constants/app_images.dart';
 import 'package:todo_chal1/constants/app_sizes.dart';
 import 'package:todo_chal1/fixtures/progress_fixture.dart';
 import 'package:todo_chal1/fixtures/task_fixture.dart';
+import 'package:todo_chal1/views/home/widgets/alert_widget.dart';
 import 'package:todo_chal1/views/home/widgets/progress_card.dart';
 import 'package:todo_chal1/views/home/widgets/task_card.dart';
+import 'package:todo_chal1/widgets/custom_button.dart';
 import 'package:todo_chal1/widgets/custom_circle_avatar.dart';
 import 'package:todo_chal1/widgets/xspace.dart';
 
@@ -34,6 +37,16 @@ class _HomeState extends State<Home> {
         }
       });
     });
+  }
+
+  void showAlert() {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isDismissible: false,
+        builder: (context) {
+          return const AlertWidget();
+        });
   }
 
   @override
@@ -112,15 +125,18 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(size.CONTENT_SPACE * .5),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: themeData.textTheme.headline6!.color!
                             .withOpacity(.2)),
-                    child: Icon(
-                      Icons.calendar_month_rounded,
-                      color: themeData.textTheme.headline6!.color,
-                    ),
+                    child: IconButton(
+                        onPressed: () {
+                          showAlert();
+                        },
+                        icon: Icon(
+                          Icons.calendar_month_rounded,
+                          color: themeData.textTheme.headline6!.color,
+                        )),
                   )
                 ],
               ),
