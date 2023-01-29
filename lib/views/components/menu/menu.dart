@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:todo_chal1/constant/app_images.dart';
 import 'package:todo_chal1/constant/app_sizes.dart';
 import 'package:todo_chal1/widgets/custom_circle_avatar.dart';
+import 'package:todo_chal1/widgets/stacked_image_container.dart';
 import 'package:todo_chal1/widgets/xspace.dart';
 
 class Menu extends StatefulWidget {
@@ -14,6 +15,12 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   final ScrollController _scrollController = ScrollController();
+  final List<String> avatars = [
+    AppImages.avatar2,
+    AppImages.avatar1,
+    AppImages.avatar3,
+    AppImages.avatar4
+  ];
   int currentIndex = 0;
   @override
   void initState() {
@@ -21,7 +28,7 @@ class _MenuState extends State<Menu> {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       AppSizes size = AppSizes(context);
       _scrollController.addListener(() {
-        double offset = (_scrollController.offset /
+        double offset = (((_scrollController.offset + (size.CARD_WIDTH) / 2)) /
             ((size.CARD_WIDTH) + size.CONTENT_SPACE));
         if (offset.toInt() != currentIndex) {
           setState(() {
@@ -45,6 +52,7 @@ class _MenuState extends State<Menu> {
             ),
           ),
           SliverAppBar(
+            pinned: true,
             toolbarHeight: size.TOOLBAR_HEIGHT,
             backgroundColor: themeData.scaffoldBackgroundColor,
             title: Text('Hello, Minato', style: themeData.textTheme.headline3),
@@ -68,7 +76,7 @@ class _MenuState extends State<Menu> {
                   vertical: 0, horizontal: size.CONTENT_SPACE),
               child: Text(
                 "Your progress",
-                style: themeData.textTheme.bodyText1!,
+                style: themeData.textTheme.headline6!,
               ),
             ),
           ),
@@ -156,7 +164,6 @@ class _MenuState extends State<Menu> {
                                     overflow: TextOverflow.ellipsis,
                                     style: themeData.textTheme.titleSmall!
                                         .copyWith(
-                                            fontWeight: FontWeight.w600,
                                             color: getCardColor(index)["text"]!
                                                 .withOpacity(.6)),
                                   )
@@ -171,6 +178,47 @@ class _MenuState extends State<Menu> {
                   },
                   itemCount: 10),
             ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.CONTENT_SPACE),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Wednesday, March 7",
+                      overflow: TextOverflow.ellipsis,
+                      style: themeData.textTheme.headline6!,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(size.CONTENT_SPACE * .5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: themeData.textTheme.headline6!.color!
+                            .withOpacity(.2)),
+                    child: Icon(
+                      Icons.calendar_month_rounded,
+                      color: themeData.textTheme.headline6!.color,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(child: XSpace(size.CONTENT_SPACE * 1.5).y),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.CONTENT_SPACE),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(
+                    4, (index) => taskContainer(status: index % 2 != 0)),
+              ),
+            ),
           )
         ],
       ),
@@ -178,7 +226,6 @@ class _MenuState extends State<Menu> {
   }
 
   Map<String, Color> getCardColor(int index) {
-    // Color primaryTextColor = const Color(0xfffdc3bc);
     Color primaryTextColor = Colors.white;
     Color primaryBackgroundColor = const Color(0xfff56c61);
     Color secondaryTextColor = const Color(0xffa88024);
@@ -189,7 +236,93 @@ class _MenuState extends State<Menu> {
         index == 0 ? primaryBackgroundColor : secondaryBackgroundColor;
     return colors;
   }
+
+  Function(bool) getStatusColorCallBack(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+    Color trueStatusTextColor = themeData.primaryColor;
+    Color trueStatusBackgroundColor = const Color(0xffe7e5f1);
+    Color falseStatusTextColor = const Color.fromARGB(255, 95, 20, 15);
+    Color falseStatusBackgroundColor = const Color(0xfffee2e7);
+    Map<String, Color> getStatusColor(bool status) {
+      Map<String, Color> colors = {};
+      colors["text"] = status ? trueStatusTextColor : falseStatusTextColor;
+      colors["background"] =
+          status ? trueStatusBackgroundColor : falseStatusBackgroundColor;
+      return colors;
+    }
+
+    return getStatusColor;
+  }
+
+  Widget taskContainer({bool status = true}) {
+    return Builder(builder: (context) {
+      ThemeData themeData = Theme.of(context);
+      final statusColorCallback = getStatusColorCallBack(context);
+      AppSizes size = AppSizes(context);
+      return Container(
+        margin: EdgeInsets.only(bottom: size.CONTENT_SPACE),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "10:00 AM",
+              style: themeData.textTheme.subtitle1,
+            ),
+            XSpace(size.CONTENT_SPACE).x,
+            Expanded(
+                child: Container(
+              padding: EdgeInsets.all(size.CONTENT_SPACE),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: statusColorCallback(status)["background"]),
+              child: IntrinsicHeight(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Meeting with front-end developers",
+                    style: themeData.textTheme.subtitle1!.copyWith(
+                        color: statusColorCallback(status)["text"],
+                        fontWeight: FontWeight.w800),
+                  ),
+                  XSpace(size.CONTENT_SPACE * .2).y,
+                  Text(
+                    "Flose Real Estate project",
+                    style: themeData.textTheme.subtitle2!
+                        .copyWith(color: statusColorCallback(status)["text"]),
+                  ),
+                  XSpace(size.CONTENT_SPACE * 1.5).y,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      StackedImageContainer(
+                        avatars: avatars,
+                        textColor: statusColorCallback(status)["text"],
+                        backgroundColor:
+                            statusColorCallback(status)["text"].withOpacity(.3),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "9:50 AM - 10:50 AM",
+                          textAlign: TextAlign.end,
+                          overflow: TextOverflow.ellipsis,
+                          style: themeData.textTheme.subtitle2!.copyWith(
+                              color: statusColorCallback(status)["text"]
+                                  .withOpacity(.4),
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  themeData.textTheme.subtitle2!.fontSize! - 2),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              )),
+            ))
+          ],
+        ),
+      );
+    });
+  }
 }
-// padding: EdgeInsets.symmetric(
-//                       vertical: size.CONTENT_SPACE,
-//                       horizontal: size.CONTENT_SPACE * 2),
