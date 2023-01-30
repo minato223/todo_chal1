@@ -26,8 +26,8 @@ class TaskFixture {
             avatars: [...avatars, ...avatars],
             id: 2),
         TaskModel(
-            title: "Meeting with front-end developers",
-            subtitle: "Flose Real Estate project",
+            title: "Learn flutter in depth",
+            subtitle: "Personal",
             duration: "13:50 AM - 15:00 AM",
             startTime: "13:40 AM",
             status: false,

@@ -8,8 +8,13 @@ import 'package:todo_chal1/widgets/xspace.dart';
 
 class ProgressCard extends StatelessWidget {
   bool enabled;
+  bool addRightMargin;
   ProgressModel item;
-  ProgressCard({super.key, required this.enabled, required this.item});
+  ProgressCard(
+      {super.key,
+      required this.enabled,
+      required this.item,
+      required this.addRightMargin});
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +33,17 @@ class ProgressCard extends StatelessWidget {
     }
 
     return TweenAnimationBuilder(
-        curve: Curves.ease,
+        curve: Curves.decelerate,
         tween: Tween<double>(begin: 0, end: enabled ? -size.CONTENT_SPACE : 0),
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 400),
         builder: ((context, value, child) {
           return Transform.translate(
             offset: Offset(0, value),
             child: Container(
               width: size.CARD_WIDTH,
               padding: EdgeInsets.all(size.CONTENT_SPACE),
+              margin: EdgeInsets.only(
+                  right: addRightMargin ? size.CONTENT_SPACE : 0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: getProgressCardColor(isDanger)["background"],

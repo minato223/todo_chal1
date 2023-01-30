@@ -14,18 +14,18 @@ class ProgressFixture {
             progression: 32.8),
         ProgressModel(
             id: 3,
-            title: "Your\nEfficiency",
-            subtitle: "Excellent results",
-            progression: 32.8),
+            title: "Lorem\nIpsum Dolor",
+            subtitle: "lorem Ipsum Dolor",
+            progression: 13),
         ProgressModel(
             id: 4,
-            title: "Your\nEfficiency",
-            subtitle: "Excellent results",
-            progression: 32.8),
+            title: "Namikaze\nMinato",
+            subtitle: "Yondaime Hokage",
+            progression: 38.8),
         ProgressModel(
             id: 5,
-            title: "Your\nEfficiency",
-            subtitle: "Excellent results",
+            title: "Apex\nLegends",
+            subtitle: "R301,Flatline",
             progression: 32.8),
       ];
 }

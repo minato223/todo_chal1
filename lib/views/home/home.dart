@@ -6,10 +6,12 @@ import 'package:todo_chal1/constants/app_sizes.dart';
 import 'package:todo_chal1/fixtures/progress_fixture.dart';
 import 'package:todo_chal1/fixtures/task_fixture.dart';
 import 'package:todo_chal1/views/home/widgets/alert_widget.dart';
+import 'package:todo_chal1/views/home/widgets/animated_progress_container.dart';
 import 'package:todo_chal1/views/home/widgets/progress_card.dart';
 import 'package:todo_chal1/views/home/widgets/task_card.dart';
 import 'package:todo_chal1/widgets/custom_button.dart';
 import 'package:todo_chal1/widgets/custom_circle_avatar.dart';
+import 'package:todo_chal1/widgets/fade_slide_animation.dart';
 import 'package:todo_chal1/widgets/xspace.dart';
 
 class Home extends StatefulWidget {
@@ -65,7 +67,7 @@ class _HomeState extends State<Home> {
             pinned: true,
             toolbarHeight: size.TOOLBAR_HEIGHT,
             backgroundColor: themeData.scaffoldBackgroundColor,
-            title: Text('Hello, Minato', style: themeData.textTheme.headline3),
+            title: Text('Hello, Minato!', style: themeData.textTheme.headline3),
             actions: [
               Padding(
                 padding: EdgeInsets.only(right: size.CONTENT_SPACE),
@@ -84,31 +86,19 @@ class _HomeState extends State<Home> {
             child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: 0, horizontal: size.CONTENT_SPACE),
-              child: Text(
-                "Your progress",
-                style: themeData.textTheme.headline6!,
-              ),
+              child: FadeSlideAnimation(
+                  direction: FadeAnimationDirection.right,
+                  child: Text(
+                    "Your progress",
+                    style: themeData.textTheme.headline6!,
+                  )),
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
-              height: size.CARD_HEIGHT,
-              margin: EdgeInsets.symmetric(vertical: size.CONTENT_SPACE),
-              child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  controller: _scrollController,
-                  padding: EdgeInsets.all(size.CONTENT_SPACE),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return ProgressCard(
-                        enabled: index == currentIndex,
-                        item: ProgressFixture.tasks[index]);
-                  },
-                  separatorBuilder: (context, index) {
-                    return XSpace(size.CONTENT_SPACE).x;
-                  },
-                  itemCount: ProgressFixture.tasks.length),
-            ),
+                height: size.CARD_HEIGHT,
+                margin: EdgeInsets.symmetric(vertical: size.CONTENT_SPACE),
+                child: const AnimatedProgressContainer()),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -118,25 +108,33 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Text(
-                      "Wednesday, March 7",
-                      overflow: TextOverflow.ellipsis,
-                      style: themeData.textTheme.headline6!,
+                    child: FadeSlideAnimation(
+                      direction: FadeAnimationDirection.right,
+                      duration: const Duration(milliseconds: 800),
+                      child: Text(
+                        "Wednesday, March 7",
+                        overflow: TextOverflow.ellipsis,
+                        style: themeData.textTheme.headline6!,
+                      ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: themeData.textTheme.headline6!.color!
-                            .withOpacity(.2)),
-                    child: IconButton(
-                        onPressed: () {
-                          showAlert();
-                        },
-                        icon: Icon(
-                          Icons.calendar_month_rounded,
-                          color: themeData.textTheme.headline6!.color,
-                        )),
+                  FadeSlideAnimation(
+                    direction: FadeAnimationDirection.right,
+                    duration: const Duration(milliseconds: 800),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: themeData.textTheme.headline6!.color!
+                              .withOpacity(.2)),
+                      child: IconButton(
+                          onPressed: () {
+                            showAlert();
+                          },
+                          icon: Icon(
+                            Icons.calendar_month_rounded,
+                            color: themeData.textTheme.headline6!.color,
+                          )),
+                    ),
                   )
                 ],
               ),
@@ -150,7 +148,13 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: TaskFixture.tasks
-                    .map((task) => TaskCard(item: task))
+                    .asMap()
+                    .entries
+                    .map((entry) => FadeSlideAnimation(
+                        direction: FadeAnimationDirection.right,
+                        duration: Duration(
+                            milliseconds: (900 + ((1 + entry.key) * 100))),
+                        child: TaskCard(item: entry.value)))
                     .toList(),
               ),
             ),
