@@ -1,16 +1,10 @@
-# todo_chal1
+# Todo Challenge 1
 
-A new Flutter project.
+Conception de l'interface utilisateur de l'application de Gestion de tâche dans Flutter ❤️
 
-## Getting Started
+Si vous avez aimé, veuillez montrer votre appréciation en donnant une étoile sur le référentiel GitHub 🚀.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### 🔥 Code source : https://github.com/minato223/todo_chal1
+#### ⛹️ UI Link: https://dribbble.com/shots/20245727-Corporate-Wellness-Mobile-App-design-iOS-Android-ux-ui-designer
+#### 👨‍💻 Contact for work: https://www.linkedin.com/in/lamine-diarra-a46504196/
+![Todo Image](https://cdn.dribbble.com/userupload/4214233/file/original-a4c80caf8bc6bcccd9ff44fc43c4f41d.png)
